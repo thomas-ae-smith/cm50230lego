@@ -1,2 +1,8 @@
 syntax: glob
 *.DS_Store
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.log
+*.synctex.gz
