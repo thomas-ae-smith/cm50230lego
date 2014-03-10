@@ -24,6 +24,7 @@ public class Titch implements FeatureListener, MoveListener {
 	UltrasonicSensor sonar;
 	Touch leftT, rightT;
 	boolean suppressed;
+	int clockwise = 1;
 	
 	Titch() {
 		
@@ -36,7 +37,7 @@ public class Titch implements FeatureListener, MoveListener {
 		leftT = new TouchSensor(SensorPort.S3);
 
 		sensors = new FusorDetector();
-//		sensors.addDetector(new RangeFeatureDetector(sonar, 60, 200));
+		sensors.addDetector(new RangeFeatureDetector(sonar, 20, 100));
 		sensors.addDetector(new TouchFeatureDetector(rightT, 4, 3));
 		sensors.addDetector(new TouchFeatureDetector(leftT, -4, 3));
 
@@ -59,9 +60,11 @@ public class Titch implements FeatureListener, MoveListener {
 	@Override
 	public void featureDetected(Feature feature, FeatureDetector detector) {
 		suppressed = true;
+		System.out.println("angle: " + feature.getRangeReading().getAngle());
+		System.out.println("range: " + feature.getRangeReading().getRange());
 		System.out.println("Level1");
-		pilot.travelArc(20, -20);
-		System.out.println(feature.getRangeReading().getAngle());
+		clockwise = (feature.getRangeReading().getAngle() > 0)? 1 : -1;
+		pilot.travelArc(10 * clockwise, -15, true);
 		
 	}
 
@@ -80,8 +83,9 @@ public class Titch implements FeatureListener, MoveListener {
 			return;
 		}
 		System.out.println("Level0");
-//		pilot.arc(40, 360, true);
-		pilot.forward();
+//		throw new Exception();
+		pilot.travelArc(80 * clockwise, 1000, true);
+//		pilot.forward();
 
 		System.out.println("finished");
 		
