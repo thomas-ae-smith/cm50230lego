@@ -24,12 +24,12 @@ public class Titch implements FeatureListener, MoveListener {
 	UltrasonicSensor sonar;
 	Touch leftT, rightT;
 	boolean suppressed;
-	int clockwise = 1;
+	int clockwise = -1;
 	
 	Titch() {
 		
 		pilot = new DifferentialPilot(5.5f, 9.0f, Motor.A, Motor.B);
-		pilot.setTravelSpeed(15);		//half the default
+//		pilot.setTravelSpeed(15);		//half the default
 		
 		sonar = new UltrasonicSensor(SensorPort.S1);
 
@@ -37,7 +37,7 @@ public class Titch implements FeatureListener, MoveListener {
 		leftT = new TouchSensor(SensorPort.S3);
 
 		sensors = new FusorDetector();
-		sensors.addDetector(new RangeFeatureDetector(sonar, 20, 100));
+		sensors.addDetector(new RangeFeatureDetector(sonar, 20, 200));
 		sensors.addDetector(new TouchFeatureDetector(rightT, 4, 3));
 		sensors.addDetector(new TouchFeatureDetector(leftT, -4, 3));
 
@@ -47,7 +47,8 @@ public class Titch implements FeatureListener, MoveListener {
 	}
 
 	public void go() {
-		pilot.travel(100, true);
+		moveStopped(null, null);
+//		pilot.travel(100, true);
 		System.out.println(" "+pilot.getMovement().getDistanceTraveled());
 		Button.waitForAnyPress();
 	}

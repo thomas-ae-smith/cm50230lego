@@ -1,0 +1,85 @@
+Experimental condition 1 (80cm)
+crash
+1.38
+1.34
+1.40
+1.32
+1.47
+
+data
+98
+94
+100
+92
+107
+mean 98.2
+sd 5.231
+
+
+Experimental condition 2 (60cm)
+4x crash
+2.03
+2.04
+2.14
+2.02
+3x fail (capsize)
+2x crash
+1x stall (backwards)
+1x crash
+1x fail (nose)
+2.04
+
+data 
+123
+124
+134
+122
+124
+mean 125.4
+sd 4.363
+
+Experimental condition 3 (100cm)
+1.23
+fail (two wheels)
+1.22
+1.22
+2x crash
+1.28
+crash
+1.21
+
+data
+83
+82
+82
+88
+81
+mean 83.2
+sd 2.482
+
+
+Double speed test (80cm)
+3x fail (nose)
+1.13
+1.06
+1.15
+crash
+6x fail (various)
+1.06
+fail
+0.59
+
+data
+73 
+66 
+75 
+66 
+59 
+mean 67.8
+sd 5.706
+
+
+Confirmation of battery
+fail (nose)
+crash
+1.34
