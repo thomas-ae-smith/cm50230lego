@@ -2,6 +2,7 @@
 
 \usepackage{natbib}
 \usepackage{times}
+\usepackage{listings,multicol}
 \usepackage{graphicx,epsfig}
 \usepackage[leftcaption]{sidecap}
 \usepackage{subfigure} % figures can have sub chunks
@@ -109,6 +110,8 @@ I constructed a simple robot with differential steering and two forms of sensing
 
 \appendix
 \section{Raw Data}\label{app:data}
+
+\lstinputlisting[basicstyle=\footnotesize\ttfamily, multicols=2]{raw_data}
 
 \section{Experimental Outcomes}\label{app:fail}
 Experimental attempts fell into four categories:
