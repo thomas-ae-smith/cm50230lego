@@ -39,7 +39,7 @@
 % \citet{BrooksAIJ91}, since you have been asked to take a fairly
 % reactive approach to developing robot intelligence.
 
-Built a mindstorms robot, implemented basic subsumption architecture as described in \citet{BrooksAIJ91} and discussed in more detail in \citet{brooks1986robust}.
+This paper describes the construction of a small, simple robot using the Lego NXT system, and the implementation of a basic subsumption architecture to govern its circumnavigation of an area; as described in \citet{BrooksAIJ91} and discussed in more detail in \citet{brooks1986robust}.
 
 \section{Approach}
 
@@ -85,7 +85,7 @@ Larger values for $R$ resulted in faster circumnavigations of the experimental a
 
 \section{Discussion}
 
-However, other factors than time alone may potentially influence the choice of an ideal value for $R$. In this experimental setup, the centre of the area was clear
+Although the numerical results come out in favour of $R$ = 100cm, other factors than time alone may potentially influence the choice of an ideal value for $R$. In this experimental setup, the centre of the area was clear of obstacles, allowing large arcs away from the wall to still arrive at their intended destination without interruption. An alternative environment (for example, a classroom --- where only the areas near the walls might reasonably be expected to be clear) would favour smaller values for $R$, as these result in the robot following paths that remain closer to detected obstacles. An interesting avenue for further research would be the back-away radius $r$, where smaller angles might result in closer wall following but more attempts needed for high-angle-of-incidence collisions, and larger angles vice-versa. A possible extension would be to use ultrasonic readings from before and after obstacle avoidance re-orientation to hypothesise a continuation of a given obstacle and attempt to fine-tune a planned course to follow it.
 
 % The discussion is the most discursive part of your paper, it {\em may}
 % include speculation. You should discuss the extent to which your
@@ -101,6 +101,8 @@ However, other factors than time alone may potentially influence the choice of a
 % to do (brief summary of the introduction), what the outcome was (brief
 % summary of the results), and what you can certainly state as a
 % result of this (the implications of the results in light of the introduction.)
+
+I constructed a simple robot with differential steering and two forms of sensing, and implemented a basic subsumption architecture to govern its behaviour when circumnavigating a room. The approach taken (back-away-and-reacquire) was influenced by the simple morphology of the robot. Routes that minimise future collisions by giving detected obstacles a wide berth maximise circumnavigation times, but sacrifice proximity to the perimeter of the area. Off-the-shelf commercial robotics toys today can match or exceed state-of-the-art research equipment from 1986.
 
 \bibliographystyle{apalike}
 \bibliography{biblio}
