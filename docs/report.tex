@@ -39,7 +39,7 @@
 % \citet{BrooksAIJ91}, since you have been asked to take a fairly
 % reactive approach to developing robot intelligence.
 
-Built a mindstorms robot, implemented basic subsumption article as discussed in \citet{BrooksAIJ91} and discussed in more detail in \citet{brooks1986robust}.
+Built a mindstorms robot, implemented basic subsumption architecture as described in \citet{BrooksAIJ91} and discussed in more detail in \citet{brooks1986robust}.
 
 \section{Approach}
 
@@ -51,8 +51,6 @@ Built a mindstorms robot, implemented basic subsumption article as discussed in 
 % other papers here too if you are taking an approach from another
 % paper, or modifying it only slightly.
 
-A small range of values for $R$ were tested for the circumnavigation of a typical kitchen. The robot was placed in the same position and orientation for each of five repetitions of each of three values of $R$ --- 60cm, 80cm and 100cm. The timer started at the same time as the robot, and was stopped once the robot had circumnavigated the area and detected an obstacle beyond its starting point. Each condition was repeated until five successful datapoints were collected - causes for unsuccseeful attempts are descripbed in Appendix \ref{app:fail}.
-Sources of variation in running times within values of $R$ include the unreliablilty of the ultrasonic sensor when approaching objects at low angles of incidence or teatowels, non-deterministic outcomes if a collision occurs while the robot is moving backwards, and potential non-deterministic outcomes from bumper collisions due to wheel slippage or friction. In order to help discount the decrease in battery charge over the course of the experiment as a potential bias factor, the first experimental condition was repeated once after the other experiments had been performed, and the time obtained was within one standard deviation of the original mean.
 
 I worked alone on this project, using one of the commercial NXT kits rather than the educational kit - supplemented with a set of wheels from my own supply that matched the ones provided with the educational kit.
 % Please do mention who shared your robot in the approach section, and
@@ -61,11 +59,14 @@ I worked alone on this project, using one of the commercial NXT kits rather than
 % each write your report independently.
 
 \subsection{Morphology}
+The design of the robot was intentionally simple in order to reduce the complexity of the systems needed to control it. A two-driving-wheels-one-follower differential steering approach was chosen to maximise manouverability, with a fixed, forward-mounted ultrasonic sensor positioned close to the axis of rotation and inline with the axis of motion. The robot's forward profile and overall area were minimised in order to reduce collision risk and simplify detection, and a pair of bumpers mounted at the forward point covering the sides and top of the profile, linked to sensors at the lateral extremities. One issue encountered during development was the length of the sensor and motor cables - often these would protrude beyond the sensor profile and snag on obstacles, altering the path of the robot. These were stowed carefully in the final design. 
 
 \subsection{Behaviour}
-\citet{BrooksAIJ91}
+The robot was controlled using a simple two-layer subsumption architecture as described in \citet{BrooksAIJ91}. Layer 0 was initially configured to drive the robot forwards in the absence of any input, while Layer 1 monitored the ultrasonic sensor and the left and right bumpers, and initiated avoidance behaviour if an obstacle was detected. The object of the behaviour was to circumnavigate a typical room however, and it was found that this approach often resulted in a criss-cross behaviour that did not resemble circumnavigation. The Level 0 behaviour was therefore modified to introduce a gentle curve dependent on the location of the last obstacle detection - that is, the robot would attempt to `go around' whatever it had detected, and if it transpired that this obstacle was wider than the radius of the curve ($R$), this would be discovered by means of a later detection and avoidance.
 
 \subsection{Experiment}
+A small range of values for $R$ were tested for the circumnavigation of a typical kitchen. The robot was placed in the same position and orientation for each of five repetitions of each of three values of $R$ --- 60cm, 80cm and 100cm. The timer started at the same time as the robot, and was stopped once the robot had circumnavigated the area and detected an obstacle beyond its starting point. Each condition was repeated until five successful datapoints were collected - causes for unsuccseeful attempts are described in Appendix \ref{app:fail}.
+Sources of variation in running times within values of $R$ include the unreliablilty of the ultrasonic sensor when approaching objects at low angles of incidence or teatowels, non-deterministic outcomes if a collision occurs while the robot is moving backwards, and potential non-deterministic outcomes from bumper collisions due to wheel slippage or friction. In order to help discount the decrease in battery charge over the course of the experiment as a potential bias factor, the first experimental condition was repeated once after the other experiments had been performed, and the time obtained compared to the original mean.
 
 
 \section{Results}
@@ -80,7 +81,11 @@ I worked alone on this project, using one of the commercial NXT kits rather than
 % surprisingly short, since the Approach section is the one giving
 % details, this is purely and only factual outcomes.
 
+Larger values for $R$ resulted in faster circumnavigations of the experimental area. $R$ = 100cm (mean. 83.2s, s.d. 2.482s) was around 40 seconds faster than $R$ = 60cm (mean 125.4s, s.d. 4.363s), with $R$ = 80cm falling in between (mean 98.2s, s.d. 5.231s). $R$ = 80cm was the first condition tested, and so an attempt with this value was repeated at the end of the experiment, resulting in a time of 94 seconds --- within one standard deviation of the mean for that value. This provides preliminary evidence for the assumption that battery charge level was not an important factor across the experiments performed.
+
 \section{Discussion}
+
+However, other factors than time alone may potentially influence the choice of an ideal value for $R$. In this experimental setup, the centre of the area was clear
 
 % The discussion is the most discursive part of your paper, it {\em may}
 % include speculation. You should discuss the extent to which your
@@ -100,17 +105,17 @@ I worked alone on this project, using one of the commercial NXT kits rather than
 \bibliographystyle{apalike}
 \bibliography{biblio}
 
-\Appendix
+\appendix
 \section{Raw Data}\label{app:data}
 
-\section{Unsuccessful attempts}\label{app:fail}
+\section{Experimental Outcomes}\label{app:fail}
 Experimental attempts fell into four categories:
-\begin{enumerate}
+\begin{description}
 	\item [Successful:] The robot successfully circumnavigated the area and detected a feature beyond its original starting point. A datapoint was recorded with the number of seconds it took to do so.
 	\item [Crash:] The provided ultrasonic sensor API functions are not thread safe. Due to the use of both motor and sensor listeners, occasionally one detection is still being processed when another arrives, resulting in a ConcurrentModificationException.
 	\item [Fail:] Two main failure modes were observed during the course of experimentation. The robot has a small blind spot directly ahead of it, that the side bumpers do not cover. If an object sufficiently thin or angled to evade ultrasonic detection (such as a metal chair leg or corner of a unit) enters this blind spot, the robot may become stuck against it. Alternatively, due to the triangular wheelbase it is possible in some circumstances for the robot to tip up and become stuck on two wheels or collapse.
 	\item [Stall:] As the robot has no rearward-facing sensors, it is possible for it to collide with an object while moving backwards to avoid another collision. In most cases this is not a significant problem, though it can non-determinisitcally change the robot's orientation. In some cases it is possible for the power of the motors to drive the rear wheel up the object sufficiently for the ultrasonic sensor to detect the floor as a false positive, and attempt to back away from it. This leads to a stall in the motors.
-\end{enumerate}
+\end{description}
 % section unsuccessful_attempts (end)
 
 % section raw_data (end)
