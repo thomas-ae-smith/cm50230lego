@@ -29,7 +29,7 @@ public class Titch implements FeatureListener, MoveListener {
 	Titch() {
 		
 		pilot = new DifferentialPilot(5.5f, 9.0f, Motor.A, Motor.B);
-//		pilot.setTravelSpeed(15);		//half the default
+		pilot.setTravelSpeed(15);		//half the default
 		
 		sonar = new UltrasonicSensor(SensorPort.S1);
 
@@ -47,6 +47,12 @@ public class Titch implements FeatureListener, MoveListener {
 	}
 
 	public void go() {
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		moveStopped(null, null);
 //		pilot.travel(100, true);
 		System.out.println(" "+pilot.getMovement().getDistanceTraveled());
